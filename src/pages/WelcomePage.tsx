@@ -1,9 +1,20 @@
 // 欢迎页：小鹿风格，介绍 ShowAndTell 功能
+import { useState } from "react"
+
 interface WelcomePageProps {
-  onStart: () => void
+  onStart: (url?: string) => void
 }
 
 export function WelcomePage({ onStart }: WelcomePageProps) {
+  const [url, setUrl] = useState("")
+
+  const handleStart = () => {
+    let finalUrl = url.trim()
+    if (finalUrl && !finalUrl.startsWith("http")) finalUrl = "https://" + finalUrl
+    if (finalUrl) window.open(finalUrl, "_blank")
+    onStart(finalUrl)
+  }
+
   return (
     <div style={{
       minHeight: "100vh",
@@ -65,35 +76,52 @@ export function WelcomePage({ onStart }: WelcomePageProps) {
         ))}
       </div>
 
-      {/* 开始按钮 */}
-      <button
-        onClick={onStart}
-        style={{
-          background: "#4E342E",
-          color: "#FFD600",
-          border: "none",
-          borderRadius: 14,
-          padding: "16px 48px",
-          fontSize: 18,
-          fontWeight: 700,
-          cursor: "pointer",
-          boxShadow: "0 4px 16px rgba(78,52,46,0.3)",
-          transition: "transform 0.15s, box-shadow 0.15s",
-          letterSpacing: 0.5,
-        }}
-        onMouseEnter={e => {
-          (e.target as HTMLElement).style.transform = "translateY(-2px)"
-          ;(e.target as HTMLElement).style.boxShadow = "0 8px 24px rgba(78,52,46,0.35)"
-        }}
-        onMouseLeave={e => {
-          (e.target as HTMLElement).style.transform = "translateY(0)"
-          ;(e.target as HTMLElement).style.boxShadow = "0 4px 16px rgba(78,52,46,0.3)"
-        }}
-      >
-        开始演示 →
-      </button>
+      {/* URL 输入 + 开始按钮 */}
+      <div style={{
+        background: "#fff",
+        borderRadius: 20,
+        padding: "24px 28px",
+        boxShadow: "0 4px 24px rgba(78,52,46,0.12)",
+        width: "100%",
+        maxWidth: 520,
+        marginBottom: 16,
+      }}>
+        <p style={{ fontSize: 13, color: "#795548", marginBottom: 10, fontWeight: 600 }}>
+          输入你要演示的网页（可选）
+        </p>
+        <div style={{ display: "flex", gap: 8 }}>
+          <input
+            type="text"
+            value={url}
+            onChange={e => setUrl(e.target.value)}
+            onKeyDown={e => { if (e.key === "Enter") handleStart() }}
+            placeholder="https://xiaolu-site.pages.dev"
+            style={{
+              flex: 1, height: 44, borderRadius: 10,
+              border: "1.5px solid #e0d5c8", padding: "0 14px",
+              fontSize: 14, outline: "none", color: "#4E342E",
+              background: "#FFFDE7",
+            }}
+          />
+          <button
+            onClick={handleStart}
+            style={{
+              height: 44, padding: "0 24px",
+              background: "#4E342E", color: "#FFD600",
+              border: "none", borderRadius: 10,
+              fontSize: 15, fontWeight: 700, cursor: "pointer",
+              whiteSpace: "nowrap",
+            }}
+          >
+            开始演示 →
+          </button>
+        </div>
+        <p style={{ fontSize: 12, color: "#aaa", marginTop: 8 }}>
+          网页会在新标签打开，ShowAndTell 工具栏悬浮在上面
+        </p>
+      </div>
 
-      <p style={{ marginTop: 16, fontSize: 13, color: "#795548" }}>
+      <p style={{ fontSize: 13, color: "#795548" }}>
         零登录 · 零账号 · 本地运行
       </p>
     </div>

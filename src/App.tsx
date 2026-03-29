@@ -155,6 +155,7 @@ function App() {
     return <WelcomePage onStart={() => setPage("editor")} />
   }
 
+
   return (
     <div style={{ width: "100vw", height: "100vh", position: "relative", overflow: "hidden", background: "#f5f5f5" }}>
 
