@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Phase 3: Advanced Features</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Phase 3: Advanced Features</h1>
+</header>
+<h1 id="phase-3-advanced-features-阶段报告">Phase 3: Advanced Features
+阶段报告</h1>
+<blockquote>
+<p><strong>阶段</strong>：3 - 高级功能
+<strong>开始时间</strong>：2026-03-23
+<strong>结束时间</strong>：2026-03-23 <strong>持续时间</strong>：1
+天</p>
+</blockquote>
+<hr />
+<h2 id="阶段概述">阶段概述</h2>
+<p>Phase 3 完成了 Excalicord 项目的高级功能实现，包括 WebGL Avatar
+渲染器、useAvatar Hook、PricingPage
+订阅页面，以及美颜滤镜的完整实现。</p>
+<h3 id="完成情况">完成情况</h3>
+<h4 id="已完成">已完成</h4>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="" /><strong>WebGL Avatar
+Renderer</strong></label>
+<ul>
+<li>Canvas 2D 渲染引擎</li>
+<li>三种头像风格：illustrated, anime, realistic</li>
+<li>三种表情：neutral, happy, serious</li>
+<li>可配置的缩放和位置</li>
+</ul></li>
+<li><label><input type="checkbox" checked="" /><strong>AI Avatar
+实时人脸检测与叠加</strong></label>
+<ul>
+<li>face-api.js 实时人脸检测</li>
+<li>TinyFaceDetector 轻量级检测器</li>
+<li>68点面部特征点追踪</li>
+<li>用户面部图像提取与叠加</li>
+<li>3层羽化边缘效果</li>
+</ul></li>
+<li><label><input type="checkbox" checked="" /><strong>Avatar UI
+控制面板</strong></label>
+<ul>
+<li>头像选择器（3种预设）</li>
+<li>表情选择器（neutral/happy/serious）</li>
+<li>6个位置预设（左上/上/右上/左下/下/右下）</li>
+<li>大小滑块（50%-200%）</li>
+<li>彩色头像预览图标</li>
+</ul></li>
+<li><label><input type="checkbox" checked="" /><strong>useAvatar
+Hook</strong></label>
+<ul>
+<li>React 集成头像功能</li>
+<li>预设头像选择</li>
+<li>位置和缩放控制</li>
+<li>音视频流处理</li>
+<li>错误状态处理</li>
+</ul></li>
+<li><label><input type="checkbox" checked="" /><strong>PricingPage
+订阅页面</strong></label>
+<ul>
+<li>三种订阅计划展示（Free, Pro, Team）</li>
+<li>FAQ 手风琴组件</li>
+<li>订阅流程集成接口</li>
+</ul></li>
+<li><label><input type="checkbox" checked="" /><strong>美颜滤镜服务
+(BeautyFilter)</strong></label>
+<ul>
+<li>磨皮效果 (smoothing)</li>
+<li>美白效果 (whitening)</li>
+<li>肤色调整 (skinTone)</li>
+<li>OffscreenCanvas 处理</li>
+</ul></li>
+<li><label><input type="checkbox" checked="" /><strong>useBeauty
+Hook</strong></label>
+<ul>
+<li>美颜设置管理</li>
+<li>启用/禁用切换</li>
+</ul></li>
+<li><label><input type="checkbox" checked="" /><strong>BeautyPanel
+组件</strong></label>
+<ul>
+<li>美颜开关</li>
+<li>滑块控制</li>
+</ul></li>
+<li><label><input type="checkbox"
+checked="" /><strong>录制集成</strong></label>
+<ul>
+<li>AI Avatar 与录制流程集成</li>
+<li>avatarStream 支持</li>
+</ul></li>
+</ul>
+<h4 id="未完成">未完成</h4>
+<ul class="task-list">
+<li><label><input type="checkbox" />Stripe 订阅集成（需要 API
+配置）</label></li>
+<li><label><input type="checkbox" />真正的 AI 虚拟形象（需要 D-ID/HeyGen
+API）</label></li>
+<li><label><input
+type="checkbox" />用量限制和计费（需要后端支持）</label></li>
+</ul>
+<hr />
+<h2 id="新增服务">新增服务</h2>
+<h3 id="webglavatarrenderer">WebGLAvatarRenderer</h3>
+<p>WebGL-based 头像渲染器：</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">interface</span> AvatarStyle {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  color<span class="op">:</span> <span class="dt">string</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  outlineColor<span class="op">:</span> <span class="dt">string</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  expression<span class="op">:</span> <span class="st">&quot;neutral&quot;</span> <span class="op">|</span> <span class="st">&quot;happy&quot;</span> <span class="op">|</span> <span class="st">&quot;serious&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">class</span> WebGLAvatarRenderer {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">initialize</span>(canvas<span class="op">:</span> <span class="bu">HTMLCanvasElement</span>)<span class="op">:</span> <span class="dt">void</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setVideoElement</span>(video<span class="op">:</span> <span class="bu">HTMLVideoElement</span> <span class="op">|</span> <span class="dt">null</span>)<span class="op">:</span> <span class="dt">void</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setAvatarStyle</span>(style<span class="op">:</span> AvatarStyle)<span class="op">:</span> <span class="dt">void</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setAvatarPosition</span>(x<span class="op">:</span> <span class="dt">number</span><span class="op">,</span> y<span class="op">:</span> <span class="dt">number</span>)<span class="op">:</span> <span class="dt">void</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setAvatarScale</span>(scale<span class="op">:</span> <span class="dt">number</span>)<span class="op">:</span> <span class="dt">void</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">start</span>()<span class="op">:</span> <span class="dt">void</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>()<span class="op">:</span> <span class="dt">void</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">createStream</span>()<span class="op">:</span> <span class="bu">MediaStream</span> <span class="op">|</span> <span class="dt">null</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">destroy</span>()<span class="op">:</span> <span class="dt">void</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="avatarservice">AvatarService</h3>
+<p>AI 虚拟形象服务（基于 WebGL 渲染）：</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">class</span> AvatarService {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">initialize</span>(canvas<span class="op">:</span> <span class="bu">HTMLCanvasElement</span>)<span class="op">:</span> <span class="dt">void</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">selectAvatar</span>(presetId<span class="op">:</span> <span class="dt">string</span>)<span class="op">:</span> <span class="dt">void</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setSourceVideo</span>(video<span class="op">:</span> <span class="bu">HTMLVideoElement</span> <span class="op">|</span> <span class="dt">null</span>)<span class="op">:</span> <span class="dt">void</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setPosition</span>(x<span class="op">:</span> <span class="dt">number</span><span class="op">,</span> y<span class="op">:</span> <span class="dt">number</span>)<span class="op">:</span> <span class="dt">void</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setScale</span>(scale<span class="op">:</span> <span class="dt">number</span>)<span class="op">:</span> <span class="dt">void</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">start</span>(sourceStream<span class="op">:</span> <span class="bu">MediaStream</span>)<span class="op">:</span> <span class="bu">MediaStream</span> <span class="op">|</span> <span class="dt">null</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>()<span class="op">:</span> <span class="dt">void</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generateAvatar</span>(imageUrl<span class="op">:</span> <span class="dt">string</span><span class="op">,</span> type<span class="op">:</span> AvatarType)<span class="op">:</span> <span class="bu">Promise</span><span class="op">&lt;</span><span class="bu">MediaStream</span> <span class="op">|</span> <span class="dt">null</span><span class="op">&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="useavatar-hook">useAvatar Hook</h3>
+<p>React 集成头像功能：</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">function</span> <span class="fu">useAvatar</span>()<span class="op">:</span> UseAvatarReturn {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Returns: isActive, currentAvatar, presets, outputStream,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">//         selectAvatar, setPosition, setScale, start, stop, generateAvatar</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<hr />
+<h2 id="新增页面">新增页面</h2>
+<h3 id="pricingpage">PricingPage</h3>
+<p>订阅计划选择页面： - 三列定价卡片布局 - 当前计划高亮显示 -
+订阅流程触发 - FAQ 手风琴组件 - 响应式设计</p>
+<hr />
+<h2 id="学习成果">学习成果</h2>
+<h3 id="技术收获">技术收获</h3>
+<ol type="1">
+<li><strong>Canvas 2D 渲染</strong>: 深入学习了 CanvasRenderingContext2D
+API</li>
+<li><strong>表情系统</strong>: 实现了简单的卡通表情渲染</li>
+<li><strong>媒体流处理</strong>: MediaStream 的创建和音频轨道复制</li>
+<li><strong>face-api.js 集成</strong>: 学会了 face-api.js 的
+TinyFaceDetector 和面部特征点检测</li>
+<li><strong>图像羽化效果</strong>: 实现3层渲染实现平滑边缘叠加效果</li>
+<li><strong>异步模型加载</strong>: 处理 face-api.js
+模型异步加载和错误处理</li>
+</ol>
+<h3 id="架构优化">架构优化</h3>
+<ol type="1">
+<li><strong>Avatar 服务分离</strong>: WebGL 渲染器与业务逻辑分离</li>
+<li><strong>预设系统</strong>: 头像预设便于快速选择</li>
+</ol>
+<hr />
+<h2 id="问题与解决方案">问题与解决方案</h2>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 26%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr>
+<th>问题</th>
+<th>原因</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TypeScript SharedArrayBuffer 类型错误</td>
+<td>FFmpeg 返回类型与 Blob 不兼容</td>
+<td>创建新的 ArrayBuffer 拷贝</td>
+</tr>
+<tr>
+<td>AI 虚拟形象需要外部 API</td>
+<td>本地无法实现高质量 AI</td>
+<td>实现 face-api.js + Canvas 卡通头像</td>
+</tr>
+<tr>
+<td>face-api.js 模型加载慢</td>
+<td>CDN 模型体积较大</td>
+<td>添加加载状态提示和错误处理</td>
+</tr>
+<tr>
+<td>人脸叠加边缘生硬</td>
+<td>直接绘制导致锯齿</td>
+<td>3层羽化渲染实现平滑过渡</td>
+</tr>
+<tr>
+<td>视频镜像问题</td>
+<td>预览和录制方向不一致</td>
+<td>正确处理坐标系变换和镜像</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="复盘与反思">复盘与反思</h2>
+<h3 id="做得好的地方">做得好的地方</h3>
+<ol type="1">
+<li>WebGL 渲染器提供了流畅的头像动画</li>
+<li>表情系统增加了互动性</li>
+<li>PricingPage 提供了专业的订阅界面</li>
+</ol>
+<h3 id="需要改进的地方">需要改进的地方</h3>
+<ol type="1">
+<li>AI 虚拟形象可通过 D-ID 或 HeyGen API 增强（当前为卡通风格）</li>
+<li>美颜滤镜可以考虑使用 WebGL 加速</li>
+<li>需要配置 Stripe 才能完成订阅流程</li>
+<li>人脸检测在低光环境下可能不稳定</li>
+</ol>
+<hr />
+<h2 id="下一步计划">下一步计划</h2>
+<h3 id="phase-4-优化与发布">Phase 4: 优化与发布</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />国际化 (i18next)</label></li>
+<li><label><input type="checkbox" />PostHog 分析集成</label></li>
+<li><label><input type="checkbox" />性能优化</label></li>
+<li><label><input type="checkbox" />正式发布</label></li>
+<li><label><input type="checkbox" />监控告警配置</label></li>
+</ul>
+<h3 id="注意事项">注意事项</h3>
+<ol type="1">
+<li>AI 虚拟形象可通过 D-ID 或 HeyGen API 增强</li>
+<li>Stripe 需要配置 publishable key 和 secret key</li>
+<li>考虑添加团队协作功能</li>
+</ol>
+<hr />
+<h2 id="提交记录">提交记录</h2>
+<table>
+<colgroup>
+<col style="width: 57%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr>
+<th>Commit</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>223d266</code></td>
+<td>feat: enhance AI Avatar with expression, position presets, size
+control and error handling</td>
+</tr>
+<tr>
+<td><code>0bbe521</code></td>
+<td>feat: enhance AI Avatar with position presets, expressions, and
+recording integration</td>
+</tr>
+<tr>
+<td><code>2483e7f</code></td>
+<td>feat: implement real-time AI Avatar with face-api.js</td>
+</tr>
+<tr>
+<td><code>28138a2</code></td>
+<td>feat: integrate AI Avatar UI with avatar selection and toggle</td>
+</tr>
+<tr>
+<td><code>6b97dd0</code></td>
+<td>fix: move useProject() before useEffect to resolve loadProject
+ReferenceError</td>
+</tr>
+<tr>
+<td><code>224684d</code></td>
+<td>feat: auto-load last project on page refresh</td>
+</tr>
+<tr>
+<td><code>20b54b1</code></td>
+<td>feat(avatar): add WebGL avatar renderer and useAvatar hook</td>
+</tr>
+<tr>
+<td><code>2b0bbe3</code></td>
+<td>docs: update phase-2 report with completion status</td>
+</tr>
+<tr>
+<td><code>652fd6b</code></td>
+<td>chore(deps): add FFmpeg.wasm packages for video export</td>
+</tr>
+<tr>
+<td><code>861360e</code></td>
+<td>feat(export): integrate FFmpeg.wasm for MP4/GIF export</td>
+</tr>
+<tr>
+<td><code>bc1e37b</code></td>
+<td>feat(recording): add CanvasRecorder service and useCanvasRecorder
+hook</td>
+</tr>
+<tr>
+<td><code>cc119b1</code></td>
+<td>feat(auth): add login, signup, and dashboard pages</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>报告版本：1.2</em> <em>最后更新：2026-03-24</em></p>
+</body>
+</html>
