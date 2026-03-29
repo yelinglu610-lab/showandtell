@@ -1,4 +1,5 @@
 /// <reference types="vitest/config" />
+import basicSsl from '@vitejs/plugin-basic-ssl'
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
@@ -11,7 +12,7 @@ const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(file
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), basicSsl()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
@@ -26,6 +27,8 @@ export default defineConfig({
     exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/core']
   },
   server: {
+    https: true,
+    port: 5175,
     headers: {
       'Cross-Origin-Opener-Policy': 'same-origin',
       'Cross-Origin-Embedder-Policy': 'credentialless'
